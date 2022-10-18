@@ -204,9 +204,21 @@
               </materialDesign:ColorPicker.Style>
             </materialDesign:ColorPicker>
 
-            <Button HorizontalAlignment="Right"
-                    Command="{Binding SaveIconCommand}"
-                    Content="_Save" />
+            <Grid HorizontalAlignment="Right">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"></ColumnDefinition>
+                <ColumnDefinition Width="70"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+              </Grid.ColumnDefinitions>
+              <CheckBox Grid.Column="0" Name="TransparentBackgroundCheckBox" IsChecked="{Binding TransparentBackground}"/>
+              <TextBlock Grid.Column="1" VerticalAlignment="Center">투명 배경</TextBlock>
+              <Button Grid.Column="2"
+                      VerticalAlignment="Center"
+                      Command="{Binding SaveIconCommand}"
+                      Content="_Save" />
+            </Grid>
+
+            
           </StackPanel>
         </materialDesign:PopupBox>
       </StackPanel>

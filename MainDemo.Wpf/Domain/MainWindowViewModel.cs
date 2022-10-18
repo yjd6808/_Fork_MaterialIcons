@@ -61,6 +61,9 @@ namespace MaterialDesignDemo.Domain
                    SelectedIndex++;
                },
                _ => SelectedIndex < DemoItems.Count - 1);
+
+            // 윤정도 초기 선택페이지는 아이콘 팩으로
+            SelectedItem = DemoItems.First(x => x.Name == "Icon Pack");
         }
 
         private readonly ICollectionView _demoItemsView;

@@ -32,6 +32,8 @@ namespace MaterialDesignDemo.Domain
                 themeManager.ThemeChanged += ThemeManager_ThemeChanged;
             }
             SetDefaultIconColors();
+
+            TransparentBackground = true;
         }
 
         private void ThemeManager_ThemeChanged(object? sender, ThemeChangedEventArgs e)
@@ -45,6 +47,7 @@ namespace MaterialDesignDemo.Domain
         private PackIconKindGroup? _group;
         private string? _kind;
         private PackIconKind _packIconKind;
+        private bool _transparentBackground;
 
         public IEnumerable<PackIconKindGroup> Kinds
         {
@@ -74,6 +77,12 @@ namespace MaterialDesignDemo.Domain
                     PackIconKind = value != null ? (PackIconKind)Enum.Parse(typeof(PackIconKind), value) : default;
                 }
             }
+        }
+
+        public bool TransparentBackground
+        {
+            get => _transparentBackground;
+            set => SetProperty(ref _transparentBackground, value);
         }
 
         public PackIconKind PackIconKind
@@ -118,7 +127,13 @@ namespace MaterialDesignDemo.Domain
         private Color _generatedIconBackground;
         public Color GeneratedIconBackground
         {
-            get => _generatedIconBackground;
+            get
+            {
+                if (_transparentBackground)
+                    return Brushes.Transparent.Color;
+
+                return _generatedIconBackground;
+            }
             set => SetProperty(ref _generatedIconBackground, value);
         }
 
@@ -148,7 +163,8 @@ namespace MaterialDesignDemo.Domain
             var icon = new Icon();
 
             //TODO: Make this size list configurable
-            foreach (var size in new[] { 256, 128, 64, 48, 32, 24, 16 })
+            // foreach (var size in new[] { 256, 128, 64, 48, 32, 24, 16 })
+            foreach (var size in new[] { 16, 24, 32, 48, 64, 128, 256 })
             {
                 RenderTargetBitmap bmp = RenderImage(size);
                 icon.Images.Add(new BmpIconImage(bmp));
@@ -161,7 +177,7 @@ namespace MaterialDesignDemo.Domain
                 var packIcon = new PackIcon
                 {
                     Kind = PackIconKind,
-                    Background = new SolidColorBrush(GeneratedIconBackground),
+                    Background = TransparentBackground ? Brushes.Transparent : new SolidColorBrush(GeneratedIconBackground),
                     Foreground = new SolidColorBrush(GeneratedIconForeground),
                     Width = size,
                     Height = size,
