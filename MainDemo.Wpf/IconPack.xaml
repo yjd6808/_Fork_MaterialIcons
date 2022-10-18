@@ -148,6 +148,15 @@
           </StackPanel>
         </Button>
 
+        <Button Margin="8,0"
+                Command="{Binding DownloadAllIConsCommand, Mode=OneTime}"
+                CommandParameter="{Binding Kind}">
+          <StackPanel Orientation="Horizontal">
+            <materialDesign:PackIcon Kind="Download" />
+            <TextBlock Margin="8,0,0,0" Text="모두 다운로드" />
+          </StackPanel>
+        </Button>
+
         <materialDesign:PopupBox StaysOpen="True">
           <materialDesign:PopupBox.ToggleContent>
             <materialDesign:PackIcon Width="30"
